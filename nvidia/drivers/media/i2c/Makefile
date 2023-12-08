@@ -3,6 +3,8 @@ subdir-ccflags-y += -Werror
 ccflags-y += -I$(srctree)/drivers/media/platform/tegra
 ccflags-y += -I$(srctree)/drivers/video/tegra/camera
 
+obj-$(CONFIG_VIDEO_DS90UB954) += ds90ub954.o
+obj-$(CONFIG_VIDEO_VEYE_VBYONE) += veye_vbyone.o
 obj-$(CONFIG_VIDEO_IMX185) += imx185.o
 obj-$(CONFIG_VIDEO_IMX185) += imx185_v1.o
 obj-$(CONFIG_VIDEO_IMX477) += imx477.o
@@ -21,3 +23,8 @@ obj-$(CONFIG_VIDEO_LT6911UXC) +=lt6911uxc.o
 obj-$(CONFIG_I2C_IOEXPANDER_SER_MAX9295) += max9295.o
 obj-$(CONFIG_I2C_IOEXPANDER_DESER_MAX9296) += max9296.o
 obj-$(CONFIG_VIDEO_IMX390) += imx390.o
+obj-$(CONFIG_VIDEO_CSIMX307) += cs_imx307.o
+obj-$(CONFIG_VIDEO_CSSC132) += cs_sc132.o
+obj-$(CONFIG_VIDEO_VEYECAM) += veyecam.o
+obj-$(CONFIG_VIDEO_VEYEIMX335) += veye_imx335.o
+obj-$(CONFIG_VIDEO_VEYEMVCAM) += veye_mvcam.o
