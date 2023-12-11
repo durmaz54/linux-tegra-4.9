@@ -46,8 +46,6 @@
 #define VEYECAM_MODEL_ID_ADDR		0x0001
 #define VEYECAM_DEVICE_ID 		0x06
 
-#define VEYECAM_HDVER_ADDR    0x00
-
 #define SENSOR_TYPR_ADDR_L    0x20
 #define SENSOR_TYPR_ADDR_H    0x21
 
@@ -92,12 +90,7 @@ static const struct regmap_config sensor_regmap_config = {
 	.reg_bits = 16,
 	.val_bits = 8,
 	.cache_type = REGCACHE_RBTREE,
-#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 4, 0)
 	.use_single_rw = true,
-#else
-	.use_single_read = true,
-	.use_single_write = true,
-#endif
 };
 
 static inline void veyecam_get_frame_length_regs(veyecam_reg *regs,
@@ -775,26 +768,6 @@ static int veyecam_read_model(struct veyecam *priv)
     }
     return 0;
 }
-/*verify hdver*/
-static int veyecam_check_version(struct veyecam *priv)
-{
-    struct camera_common_data *s_data = priv->s_data;
-	struct device *dev = s_data->dev;
-    int ret;
-    u8 hdver;
-    ret = veyecam_read_reg(s_data, VEYECAM_HDVER_ADDR, &hdver);
-	if (ret) {
-		dev_err(dev, "check hdver error \n");
-		return -ENODEV;
-	}
-    dev_info(dev, "check hdver %d \n",hdver);
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 10, 0)
-    if(hdver <=0x6){
-        dev_err(dev, "Xavier and Orin have stricter mipi timing verification, please use a newer version(>=7) camera.\n");
-    }
-#endif
-    return 0;
-}
 /* Verify chip ID */
 static int veyecam_identify_module(struct veyecam *priv)
 {
@@ -822,7 +795,6 @@ static int veyecam_identify_module(struct veyecam *priv)
 			__func__, device_id);
     }
     veyecam_read_model(priv);
-    veyecam_check_version(priv);
 	return err;
 }
 
@@ -975,5 +947,5 @@ static struct i2c_driver veyecam_i2c_driver = {
 module_i2c_driver(veyecam_i2c_driver);
 
 MODULE_DESCRIPTION("Media Controller driver for CSONEPLUS VEYECAM");
-MODULE_AUTHOR("xumm@csoneplus.com  Tianjin Zhonganyijia Tech Co.,Ltd.");
+MODULE_AUTHOR("NVIDIA Corporation");
 MODULE_LICENSE("GPL v2");

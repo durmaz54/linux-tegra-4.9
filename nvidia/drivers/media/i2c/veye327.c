@@ -192,7 +192,7 @@ static int veye327_set_group_hold(struct tegracam_device *tc_dev, bool val)
     VEYE_TRACE
 	return 0;
 }
-
+#if 0
 static int veye327_set_gain(struct tegracam_device *tc_dev, s64 val)
 {
     #if 0
@@ -225,6 +225,7 @@ fail:
     VEYE_TRACE
     return 0;
 }
+#endif
 #if 0
 static int veye327_set_coarse_time(struct veye327 *priv, s64 val)
 {
@@ -336,7 +337,7 @@ fail:
     return 0;
 }
 #endif
-
+#if 0
 static int veye327_set_frame_rate(struct tegracam_device *tc_dev, s64 val)
 {
     #if 0
@@ -436,7 +437,7 @@ static int veye327_set_exposure(struct tegracam_device *tc_dev, s64 val)
      #endif
     return 0;
 }
-
+  #endif
 static int veye327_fill_string_ctrl(struct tegracam_device *tc_dev,
 				struct v4l2_ctrl *ctrl)
 {
@@ -464,9 +465,9 @@ static struct tegracam_ctrl_ops veye327_ctrl_ops = {
 	.numctrls = ARRAY_SIZE(ctrl_cid_list),
 	.ctrl_cid_list = ctrl_cid_list,
 	//.string_ctrl_size = {0, VEYE327_FUSE_ID_STR_SIZE},
-	.set_gain = veye327_set_gain,
-	.set_exposure = veye327_set_exposure,
-	.set_frame_rate = veye327_set_frame_rate,
+	//.set_gain = veye327_set_gain,
+	//.set_exposure = veye327_set_exposure,
+	//.set_frame_rate = veye327_set_frame_rate,
 	.set_group_hold = veye327_set_group_hold,
 	.fill_string_ctrl = veye327_fill_string_ctrl,
 };
@@ -586,9 +587,9 @@ static struct camera_common_pdata *veye327_parse_dt(struct tegracam_device *tc_d
 	struct device_node *np = dev->of_node;
 	struct camera_common_pdata *board_priv_pdata;
 	const struct of_device_id *match;
-	struct camera_common_pdata *ret = NULL;
+	//struct camera_common_pdata *ret = NULL;
 	int err;
-	int gpio;
+	//int gpio;
 
 	if (!np)
 		return NULL;
@@ -604,15 +605,17 @@ static struct camera_common_pdata *veye327_parse_dt(struct tegracam_device *tc_d
 	if (!board_priv_pdata)
 		return NULL;
 
-	gpio = of_get_named_gpio(np, "reset-gpios", 0);
+	/*gpio = of_get_named_gpio(np, "reset-gpios", 0);
 	if (gpio < 0) {
 		if (gpio == -EPROBE_DEFER)
 			ret = ERR_PTR(-EPROBE_DEFER);
 		dev_err(dev, "reset-gpios not found \n");
 		goto error;
 	}
-	board_priv_pdata->reset_gpio = (unsigned int)gpio;
-
+	board_priv_pdata->reset_gpio = (unsigned int)gpio;*/
+    //no reset gpio
+    board_priv_pdata->reset_gpio = 0;
+    
 	err = of_property_read_string(np, "mclk", &board_priv_pdata->mclk_name);
 	if (err)
 		dev_dbg(dev, "mclk name not present, "
@@ -633,9 +636,9 @@ static struct camera_common_pdata *veye327_parse_dt(struct tegracam_device *tc_d
     VEYE_TRACE
 	return board_priv_pdata;
 
-error:
+/*error:
 	devm_kfree(dev, board_priv_pdata);
-	return ret;
+	return ret;*/
 }
 
 static int veye327_set_mode(struct tegracam_device *tc_dev)
@@ -865,7 +868,8 @@ static int veye327_probe(struct i2c_client *client,
 		dev_err(dev, "board setup failed\n");
 		return err;
 	}
-
+    //make sure it is continues mode
+    veye327_write_reg(priv->s_data, 0x0b, 0xFF);
 	err = tegracam_v4l2subdev_register(tc_dev, true);
 	if (err) {
 		dev_err(dev, "tegra camera subdev registration failed\n");
