@@ -28,3 +28,4 @@ obj-$(CONFIG_VIDEO_CSSC132) += cs_sc132.o
 obj-$(CONFIG_VIDEO_VEYECAM) += veyecam.o
 obj-$(CONFIG_VIDEO_VEYEIMX335) += veye_imx335.o
 obj-$(CONFIG_VIDEO_VEYEMVCAM) += veye_mvcam.o
+obj-$(CONFIG_VIDEO_VEYE327) += veye327.o
