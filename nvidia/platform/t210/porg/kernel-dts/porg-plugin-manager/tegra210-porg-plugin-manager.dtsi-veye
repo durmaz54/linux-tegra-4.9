@@ -185,16 +185,11 @@
 					non-removable;
 				};
 			};
-
 			/* VEYE327 single sensor module */
 			override@2 {
 				target = <&veye327_single_cam0>;
 				_overlay_ {
 					status = "okay";
-					mode0{
-                    				discontinuous_clk = "yes";
-						serdes_pix_clk_hz = "800000000";
-					};
 				};
 			};
 			override@3 {
@@ -301,19 +296,7 @@
 					isp_bw_margin_pct = <25>;
 				};
 			};
-			/*fpd link 3 */
-		            override@15 {
-						target = <&single_fpdlink0>;
-						_overlay_ {
-							status = "okay";
-		                            serializers {
-		                            	serializer@0{
-		                            	continuous-clock;
-		                            };
-		                        };
-			    	};
-			    };
-			override@16 {
+			override@15 {
 				target = <&cam_module1>;
 				_overlay_ {
 					status = "disabled";
@@ -323,16 +306,11 @@
 
 		fragement@10 {
 			ids = ">=3448-0000-300", ">=3448-0002-300";
-			
 			/* VEYE327 dual sensor module */
 			override@0 {
 				target = <&veye327_cam0>;
 				_overlay_ {
 					status = "okay";
-					mode0{
-                    				discontinuous_clk = "yes";
-						serdes_pix_clk_hz = "800000000";
-					};
 				};
 			};
 			override@1 {
@@ -358,10 +336,6 @@
 				target = <&veye327_cam1>;
 				_overlay_ {
 					status = "okay";
-					mode0{
-                    			discontinuous_clk = "yes";
-					serdes_pix_clk_hz = "800000000";
-					};
 				};
 			};
 			override@4 {
@@ -487,7 +461,7 @@
 				};
 			};
 			override@21 {
-				target = <&rbpcv2_veye327_csi_out1>;
+				target = <&rbpcv2_cssc132_csi_out1>;
 				_overlay_ {
 					status = "okay";
 				};
@@ -525,31 +499,9 @@
 					status = "okay";
 				};
 			};
-			/* fpdlink3 module */
-			override@26 {
-				target = <&fpdlink0>;
-				_overlay_ {
-					status = "okay";
-                    serializers {
-                            serializer@0{
-                            continuous-clock;
-                            };
-                        };
-				};
-			};
-	            	override@27 {
-					target = <&fpdlink1>;
-					_overlay_ {
-						status = "okay";
-				                        serializers {
-				                            serializer@0{
-				                            continuous-clock;
-				                            };
-							};
-                        			};
-					};
-				};
-	fragment@12 {
+		};
+
+		fragment@12 {
 			ids = ">=3448-0003-400";
 			override@0 {
 				target = <&sdhci3>;
@@ -608,9 +560,3 @@
 		};
 	};
 };
-&i2c6 {
-			clock-frequency = <100000>;
-		};
-&i2c7 {
-			clock-frequency = <100000>;
-		};
