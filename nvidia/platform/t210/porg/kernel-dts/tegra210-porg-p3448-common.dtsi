@@ -27,9 +27,17 @@
 #include "porg-platforms/tegra210-porg-power-tree-p3448-0000-a00.dtsi"
 #include "porg-platforms/tegra210-pinmux-drive-sdmmc-common.dtsi"
 #include "porg-platforms/tegra210-porg-pwm-fan.dtsi"
+#include "porg-platforms/tegra210-porg-fpdlink-90ub954.dtsi"
+#include "porg-platforms/tegra210-porg-fpdlink-dual-90ub954.dtsi"
 #include "porg-platforms/tegra210-porg-camera.dtsi"
 #include "porg-platforms/tegra210-porg-camera-rbpcv2-imx219.dtsi"
 #include "porg-platforms/tegra210-porg-camera-rbpcv2-dual-imx219.dtsi"
+#include "porg-platforms/tegra210-porg-camera-rbpcv2-veye327.dtsi"
+#include "porg-platforms/tegra210-porg-camera-rbpcv2-dual-veye327.dtsi"
+#include "porg-platforms/tegra210-porg-camera-rbpcv2-csimx307.dtsi"
+#include "porg-platforms/tegra210-porg-camera-rbpcv2-dual-csimx307.dtsi"
+#include "porg-platforms/tegra210-porg-camera-rbpcv2-cssc132.dtsi"
+#include "porg-platforms/tegra210-porg-camera-rbpcv2-dual-cssc132.dtsi"
 #include <t210-common-platforms/tegra210-ers-hdmi-e2190-1100-a00.dtsi>
 #include <t210-common-platforms/tegra210-dp.dtsi>
 #include <t210-common-platforms/tegra210-thermal-userspace-alert.dtsi>
